@@ -1,14 +1,17 @@
 package bank_products.cards;
 
-public class CreditCard extends Card {
+public class CreditCard implements Cards{
 
+    private String productName;
+    private String currency;
+    private Double balance;
     private Double loanPercent;
-    private Double loanSum;
-    private final Double totalAvailableSumOnCard = getBalance();
 
-    @Override
+    private Double loanSum = 0.0;
+    private Double totalAvailableSumOnCard;
+
+
     public void cardReplenishment(Double value) {
-        double balance = getBalance();
         balance += value;
         if (loanSum > 0 && loanSum > value) {
             loanSum -= value;
@@ -16,12 +19,9 @@ public class CreditCard extends Card {
         else if (loanSum > 0 && loanSum < value) {
             loanSum = 0.0;
         }
-        setBalance(balance);
     }
 
-    @Override
     public void cardWriteOff(Double value) {
-        double balance = getBalance();
         if (balance > value) {
             balance -= value;
             if (balance < totalAvailableSumOnCard) {
@@ -30,14 +30,21 @@ public class CreditCard extends Card {
         }
     }
 
+    public Double getBalance() {
+        return balance;
+    }
+
     public double getLoanSum() {
         return loanSum;
     }
 
     public CreditCard(String productName, String currency, Double balance, Double loanPercent) {
-        super(productName, currency, balance);
-        if (loanPercent > 0) {
+        if (productName != null && currency != null && balance >= 0.0 && loanPercent > 0) {
+            this.productName = productName;
+            this.currency = currency;
+            this.balance = balance;
             this.loanPercent = loanPercent;
+            this.totalAvailableSumOnCard = balance;
         }
     }
 
