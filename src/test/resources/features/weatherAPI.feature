@@ -1,7 +1,7 @@
 Feature: Weather API tests
 
   @positive
-  Scenario Outline: get correct weather info
+  Scenario Outline: Отправка корекктного запроса
     When отправлен запрос погоды в городе <city>
     Then проверка полей <requset.query>, <location.timezone_id>, <location.uts_offset> и current.temperature ответа от weatherstack
 
@@ -13,7 +13,7 @@ Feature: Weather API tests
     |"Prague"  |"Prague, Czech Republic"            |"Europe/Prague"      |"1.0"             |
 
   @negative
-  Scenario Outline: get incorrect weather info
+  Scenario Outline: Отправка запроса с ошибкой
     When отправлен неправильный запрос погоды в городе <city>, системой измерения <units>, локализацией <lang>
     Then пришёл ответ от weatherstack с кодом ошибки <code>
 
